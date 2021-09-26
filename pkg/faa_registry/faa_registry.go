@@ -55,7 +55,6 @@ func (r *Registry) LookupByTransponder(transponder string) (*Registration, error
     case nil:
         var registration Registration
         json.Unmarshal([]byte(data), &registration)
-        // log.Println(spew.Sdump(registration))
         return &registration, nil
     default:
         log.Println("ERROR : LookupByTransponder()")
@@ -72,7 +71,6 @@ func (r *Registry) LookupByRegistration(registration string) (*Registration, err
     case nil:
         var registration Registration
         json.Unmarshal([]byte(data), &registration)
-        // log.Println(spew.Sdump(registration))
         return &registration, nil
     case sql.ErrNoRows:
         return nil, err

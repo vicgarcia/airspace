@@ -1,83 +1,83 @@
 package aviation_stack
 
 import (
-	"os"
-   "io/ioutil"
-   "net/url"
-	"net/http"
-   "encoding/json"
-   "log"
-   "github.com/davecgh/go-spew/spew"
+    "os"
+    "io/ioutil"
+    "net/url"
+    "net/http"
+    "encoding/json"
+    "log"
+    "github.com/davecgh/go-spew/spew"
 )
 
 const (
-   FLIGHTS_URL = "http://api.aviationstack.com/v1/flights"
+    FLIGHTS_URL = "http://api.aviationstack.com/v1/flights"
 )
 
 
 type ResponseJson struct {
-   Data []Flight `json:"data"`
+    Data []Flight `json:"data"`
 }
 
 type Flight struct {
-   Airline Airline `json:"airline"`
-   Number Number `json:"flight"`
-   Departure Departure `json:"departure"`
-   Arrival Arrival `json:"arrival"`
+    Airline Airline `json:"airline"`
+    Number Number `json:"flight"`
+    Departure Departure `json:"departure"`
+    Arrival Arrival `json:"arrival"`
 }
 
 type Airline struct {
-   Name string `json:"name"`
+    Name string `json:"name"`
 }
 
 type Number struct {
-   IATA string `json:"iata"`
-   ICAO string `json:"icao"`
+    IATA string `json:"iata"`
+    ICAO string `json:"icao"`
 }
 
 type Departure struct {
-   Airport string `json:"iata"`
-   Terminal string `json:"terminal"`
-   Gate string `json:"gate"`
+    Airport string `json:"iata"`
+    Terminal string `json:"terminal"`
+    Gate string `json:"gate"`
 }
 
 type Arrival struct {
-   Airport string `json:"iata"`
-   Terminal string `json:"terminal"`
-   Gate string `json:"gate"`
+    Airport string `json:"iata"`
+    Terminal string `json:"terminal"`
+    Gate string `json:"gate"`
 }
 
 
 func LookupActiveFlightByICAO(flight_icao string) (*Flight, error) {
 
-   payload := url.Values{}
-	payload.Add("access_key", os.Getenv("AVIATION_STACK_API_KEY"))
-	payload.Add("flight_icao", flight_icao)
-	payload.Add("flight_status", "active")
+    payload := url.Values{}
+    payload.Add("access_key", os.Getenv("AVIATION_STACK_API_KEY"))
+    payload.Add("flight_icao", flight_icao)
+    payload.Add("flight_status", "active")
 
-   requestUrl := FLIGHTS_URL + "?" + payload.Encode()
-   // spew.Dump(requestUrl)
+    requestUrl := FLIGHTS_URL + "?" + payload.Encode()
+    // spew.Dump(requestUrl)
 
-   resp, err := http.Get(requestUrl)
-   if err != nil {
-      log.Println("ERROR : LookupActiveFlightByICAO()")
-      log.Println(spew.Sdump(err))
-      return nil, err
-   }
-   defer resp.Body.Close()
+    resp, err := http.Get(requestUrl)
+    if err != nil {
+        log.Println("ERROR : LookupActiveFlightByICAO()")
+        log.Println(spew.Sdump(err))
+        return nil, err
+    }
+    defer resp.Body.Close()
 
-   body, err := ioutil.ReadAll(resp.Body)
-   // spew.Dump(string(body))
+    body, err := ioutil.ReadAll(resp.Body)
+    // spew.Dump(string(body))
 
-   var responseJson ResponseJson
-   json.Unmarshal(body, &responseJson)
-   // spew.Dump(responseJson)
+    var responseJson ResponseJson
+    json.Unmarshal(body, &responseJson)
+    // spew.Dump(responseJson)
 
-   if len(responseJson.Data) > 0 {
-      return &responseJson.Data[0], nil
-   } else {
-      return nil, nil
-   }
+    if len(responseJson.Data) > 0 {
+        return &responseJson.Data[0], nil
+    } else {
+        return nil, nil
+    }
 
 }
 
