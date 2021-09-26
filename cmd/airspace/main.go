@@ -209,7 +209,8 @@ func Flight(command []string) {
 func main() {
 
     // load configuration into env
-    err := godotenv.Load(".config")
+    configFilePath = os.Getenv("APPLICATION_PATH") + "/.config"
+    err := godotenv.Load(configFilePath)
     if err != nil {
         log.Println("ERROR : opening config file in main()")
         log.Println(spew.Sdump(err))
@@ -217,7 +218,8 @@ func main() {
     }
 
     // setup logging
-    logFile, err := os.OpenFile("airspace.log", os.O_RDWR | os.O_CREATE | os.O_APPEND, 0666)
+    logFilePath = os.Getenv("APPLICATION_PATH") + "/error.log"
+    logFile, err := os.OpenFile(logFilePath, os.O_RDWR | os.O_CREATE | os.O_APPEND, 0666)
     if err != nil {
         log.Println("ERROR : opening log file in main()")
         log.Println(spew.Sdump(err))

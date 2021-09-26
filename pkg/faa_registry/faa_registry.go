@@ -1,15 +1,12 @@
 package faa_registry
 
 import (
+    "os"
     "database/sql"
     _ "github.com/mattn/go-sqlite3"
     "encoding/json"
     "log"
     "github.com/davecgh/go-spew/spew"
-)
-
-const (
-    DB_FILE_PATH = "./faa_registry.db"
 )
 
 
@@ -83,7 +80,8 @@ func (r *Registry) LookupByRegistration(registration string) (*Registration, err
 }
 
 func Connect() (*Registry, error) {
-    db, err := sql.Open("sqlite3", DB_FILE_PATH)
+    sqliteFilePath := os.Getenv("APPLICATION_PATH") + "/faa_registry.db"
+    db, err := sql.Open("sqlite3", sqliteFilePath)
     if err != nil {
         log.Println("ERROR : faa_registry.Connect()")
         log.Println(spew.Sdump(err))
