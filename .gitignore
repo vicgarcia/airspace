@@ -1,0 +1,5 @@
+cmd/airspace/airspace
+cmd/airspace/airspace.log
+cmd/airspace/aircraft.json
+cmd/airspace/faa_registry.db
+cmd/airspace/.config
