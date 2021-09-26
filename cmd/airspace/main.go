@@ -31,9 +31,10 @@ func makeAircraftLineOutput(aircraft dump1090.Aircraft, registration *faa_regist
 
 func makeRegistrationOutput(registration *faa_registry.Registration) string {
     var output string
-    output += fmt.Sprintf("%s %s \n",
+    output += fmt.Sprintf("%s %s %s \n",
         registration.Aircraft.Manufacturer,
         registration.Aircraft.Model,
+        registration.AirworthinessDate,
     )
     if len(registration.Engine.Manufacturer) > 0 && len(registration.Engine.Model) > 0 {
         output += fmt.Sprintf("%dx %s %s \n",
@@ -46,7 +47,7 @@ func makeRegistrationOutput(registration *faa_registry.Registration) string {
         strings.ToUpper(registration.Aircraft.Type),
         registration.Aircraft.Seats,
     )
-    output += fmt.Sprintf("REG# %s TRANSPNDR %s \n",
+    output += fmt.Sprintf("REG# %s TRNSP %s \n",
         registration.RegistrationNumber,
         registration.Transponder,
     )
@@ -64,7 +65,7 @@ func makeFlightOutput(flight *aviation_stack.Flight) string {
         flight.Airline.Name,
         flight.Number.IATA,
     )
-    output += fmt.Sprintf("%s %s -> %s %s \n",
+    output += fmt.Sprintf("%s (%s) -> %s (%s) \n",
         flight.Departure.Airport,
         flight.Departure.Gate,
         flight.Arrival.Airport,
@@ -155,7 +156,9 @@ func Transponder(command []string) {
     case nil:
         // spew.Dump(registration)
         output := makeRegistrationOutput(registration)
-        output += fmt.Sprintf("https://flightaware.com/live/flight/%s \n", registration.Transponder)
+        output += fmt.Sprintf("https://flightaware.com/live/flight/%s \n",
+            registration.RegistrationNumber,
+        )
         console.Render(output)
     case sql.ErrNoRows:
         output := fmt.Sprintf("no registration with transponder '%s' found", command[1])
@@ -176,7 +179,9 @@ func Registration(command []string) {
     case nil:
         // spew.Dump(registration)
         output := makeRegistrationOutput(registration)
-        output += fmt.Sprintf("https://flightaware.com/resources/registration/%s \n", registration.RegistrationNumber)
+        output += fmt.Sprintf("https://flightaware.com/resources/registration/%s \n",
+            registration.RegistrationNumber,
+        )
         console.Render(output)
     case sql.ErrNoRows:
         output := fmt.Sprintf("no registration with registration number '%s' found", command[1])
@@ -231,7 +236,7 @@ func main() {
     defer tty.Close()
 
     // startup banner and render initial prompt
-    console.Render("\nairspace | shell\n")
+    console.Render("\nairspace | tracking console\n")
     console.RenderPrompt()
 
     // app loop : wait for input, execute command, render prompt for next iteration

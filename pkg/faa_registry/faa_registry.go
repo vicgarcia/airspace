@@ -16,6 +16,7 @@ const (
 type Registration struct {
     RegistrationNumber string `json:"registration_number"`
     Transponder string `json:"transponder_code_hex"`
+    AirworthinessDate string `json:"airworthiness_date"`
     Aircraft Aircraft `json:"aircraft"`
     Engine Engine `json:"engine"`
     Owner Owner `json:"registrant"`
