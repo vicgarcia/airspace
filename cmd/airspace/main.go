@@ -208,9 +208,18 @@ func Flight(command []string) {
 
 func main() {
 
+    // get application path
+    applicationDir, err := filepath.Abs(filepath.Dir(os.Args[0]))
+    if err != nil {
+        log.Println("ERROR : find application directory in main()")
+        log.Println(spew.Sdump(err))
+        panic(err)
+    }
+    // spew.Dump(applicationDir)
+
     // load configuration into env
-    configFilePath := os.Getenv("APPLICATION_PATH") + "/.config"
-    err := godotenv.Load(configFilePath)
+    configFilePath := applicationDir + "/.config"
+    err = godotenv.Load(configFilePath)
     if err != nil {
         log.Println("ERROR : opening config file in main()")
         log.Println(spew.Sdump(err))
@@ -218,7 +227,7 @@ func main() {
     }
 
     // setup logging
-    logFilePath := os.Getenv("APPLICATION_PATH") + "/error.log"
+    logFilePath := applicationDir + "/error.log"
     logFile, err := os.OpenFile(logFilePath, os.O_RDWR | os.O_CREATE | os.O_APPEND, 0666)
     if err != nil {
         log.Println("ERROR : opening log file in main()")

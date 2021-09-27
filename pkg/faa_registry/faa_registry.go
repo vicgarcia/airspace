@@ -80,7 +80,13 @@ func (r *Registry) LookupByRegistration(registration string) (*Registration, err
 }
 
 func Connect() (*Registry, error) {
-    sqliteFilePath := os.Getenv("APPLICATION_PATH") + "/faa_registry.db"
+    applicationDir, err := filepath.Abs(filepath.Dir(os.Args[0]))
+    if err != nil {
+        log.Println("ERROR : faa_registry.Connect()")
+        log.Println(spew.Sdump(err))
+        panic(err)
+    }
+    sqliteFilePath := applicationDir + "/faa_registry.db"
     db, err := sql.Open("sqlite3", sqliteFilePath)
     if err != nil {
         log.Println("ERROR : faa_registry.Connect()")
