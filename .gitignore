@@ -3,3 +3,4 @@ cmd/airspace/error.log
 cmd/airspace/aircraft.json
 cmd/airspace/faa_registry.db
 cmd/airspace/.config
+db/*
