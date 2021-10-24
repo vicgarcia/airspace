@@ -4,7 +4,7 @@
 rm -rf db
 mkdir db
 
-# drop into /tmp
+# drop into /db
 pushd db
 
 # create virtual environmeet for temporary use
@@ -77,4 +77,3 @@ popd
 
 # move the sqlite db into the application path
 mv db/faa_registry.db cmd/airspace/faa_registry.db
-
