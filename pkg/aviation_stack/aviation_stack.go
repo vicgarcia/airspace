@@ -53,7 +53,7 @@ func LookupActiveFlightByICAO(flight_icao string) (*Flight, error) {
     payload := url.Values{}
     payload.Add("access_key", os.Getenv("AVIATION_STACK_API_KEY"))
     payload.Add("flight_icao", flight_icao)
-    payload.Add("flight_status", "active")
+    // payload.Add("flight_status", "active")
 
     requestUrl := FLIGHTS_URL + "?" + payload.Encode()
     // spew.Dump(requestUrl)

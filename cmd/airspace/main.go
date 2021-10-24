@@ -66,7 +66,7 @@ func makeFlightOutput(flight *aviation_stack.Flight) string {
         flight.Airline.Name,
         flight.Number.IATA,
     )
-    output += fmt.Sprintf("%s (%s) -> %s (%s) \n",
+    output += fmt.Sprintf("%s %s -> %s %s \n",
         flight.Departure.Airport,
         flight.Departure.Gate,
         flight.Arrival.Airport,
