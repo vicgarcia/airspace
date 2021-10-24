@@ -11,7 +11,7 @@ pushd db
 echo "setting up environment ..."
 # assuming python 3.8 installed as described in the readme
 python3.8 -m venv venv
-venv/bin/pip -m pip install --upgrade pip
+venv/bin/python -m pip install --upgrade pip
 cat > requirements.txt << EOF
 certifi==2021.5.30
 charset-normalizer==2.0.6
@@ -53,6 +53,7 @@ cursor.execute("create table aircrafts (transponder varchar(6), registration var
 
 # insert the parsed aircrafts into the database
 print('insert faa data into aircrafts data ...')
+inserted = 0
 for row in data['master'].values():
     # print(row['transponder_code_hex'], row['registration_number'])
     cursor.execute(
@@ -60,6 +61,13 @@ for row in data['master'].values():
         ( row['transponder_code_hex'], row['registration_number'], json.dumps(row) )
     )
     connection.commit()
+    # print output every 20000 rows
+    inserted += 1
+    if inserted % 20000 == 0:
+        print(f'... inserted {inserted} records')
+
+# print total inserted
+print(f'insert complete, {inserted} records')
 
 # setup indexes on the aircrafts table
 cursor.execute('create index aircrafts_transponder_index on aircrafts(transponder)')
