@@ -4,11 +4,11 @@ airspace is a command line utility to provide an interactive shell for use with 
 
 airspace is intended for install on a Raspberry PI running FlightAware's PiAware configuration
 
-Review and follow the full instructions from (FlightAware)[https://flightaware.com/adsb/piaware/build]
+Review and follow the full instructions from [FlightAware](https://flightaware.com/adsb/piaware/build)
 - Assembling a PiAware device with a Raspberry Pi and ADS-B radio dongle
 - Flash the PiAware OS image to your MicroSD card
 
-After flashing the device follow instructions for (additional options)[https://flightaware.com/adsb/piaware/build/optional]
+After flashing the device follow instructions for [additional options](https://flightaware.com/adsb/piaware/build/optional)
 - Enable SSH access to the PiAware device by creating an empty file `ssh` at the root of the MicroSD card
 - After logging in via SSH, expand the filesystem to use the entire MicroSD card with `sudo raspi-config`
 
@@ -78,7 +78,7 @@ After configuring tmux, disconnect from the device ssh session and reconnect usi
 ssh pi@<device ip> -t "tmux attach-session -d -t pi || tmux new-session -s pi"
 ```
 
-Setup (FlightRadar24)[https://flightradar24.com] feeder based on (instruction here)[https://forum.flightradar24.com/forum/radar-forums/flightradar24-feeding-data-to-flightradar24/11792-beginner-feed-both-fr24-und-fa-with-raspberry-pi-3-model-b-flightaware-pro-stick]
+Setup [FlightRadar24](https://flightradar24.com) feeder based on [instruction here](https://forum.flightradar24.com/forum/radar-forums/flightradar24-feeding-data-to-flightradar24/11792-beginner-feed-both-fr24-und-fa-with-raspberry-pi-3-model-b-flightaware-pro-stick)
 ```
 sudo bash -c "$(wget -O - https://repo-feed.flightradar24.com/install_fr24_rpi.sh)"
 ```
@@ -124,7 +124,7 @@ sudo systemctl status dump1090-fa
 sudo systemctl status piaware
 ```
 
-Install python 3.8, via (this guide)[https://community.home-assistant.io/t/home-assistant-core-python-3-8-backport-for-debian-buster/234859]
+Install python 3.8, via [this guide](https://community.home-assistant.io/t/home-assistant-core-python-3-8-backport-for-debian-buster/234859)
 
 Install python3 -distutils and -venv, which will be used by the python 3.8 install
 ```
