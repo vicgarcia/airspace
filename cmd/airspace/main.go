@@ -281,8 +281,8 @@ func main() {
             case "registration":
                 Registration(command)
 
-            case "flight":
-                Flight(command)
+            // case "flight":
+            //     Flight(command)
 
             case "help":
                 console.Renderln("available commands:")
@@ -290,7 +290,7 @@ func main() {
                 console.Renderln("live - live updated ui of all tracked flights")
                 console.Renderln("transponder <transponder> - lookup registration by transponder")
                 console.Renderln("registration <registration> - lookup registration by registration number")
-                console.Renderln("flight <flight> - lookup flight information by flight number")
+                // console.Renderln("flight <flight> - lookup flight information by flight number")
                 console.Renderln("clear - clear the screen")
                 console.Renderln("exit - exit the console")
 

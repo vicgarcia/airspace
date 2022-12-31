@@ -1,5 +1,7 @@
 package aviation_stack
 
+// as of 2022-12-30 this is not working
+
 import (
     "os"
     "io/ioutil"
@@ -11,7 +13,7 @@ import (
 )
 
 const (
-    FLIGHTS_URL = "http://api.aviationstack.com/v1/flights"
+    FLIGHTS_URL = "https://api.aviationstack.com/v1/flights"
 )
 
 
