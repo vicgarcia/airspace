@@ -285,7 +285,14 @@ func main() {
                 Flight(command)
 
             case "help":
-                console.Renderln("help command output")
+                console.Renderln("available commands:")
+                console.Renderln("ping - print list of current tracked flights")
+                console.Renderln("live - live updated ui of all tracked flights")
+                console.Renderln("transponder <transponder> - lookup registration by transponder")
+                console.Renderln("registration <registration> - lookup registration by registration number")
+                console.Renderln("flight <flight> - lookup flight information by flight number")
+                console.Renderln("clear - clear the screen")
+                console.Renderln("exit - exit the console")
 
             case "clear":
                 console.ClearScreen()
